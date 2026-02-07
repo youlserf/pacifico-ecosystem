@@ -1,0 +1,23 @@
+{
+  "namespace": "com.pacifico.insurance.event",
+  "type": "record",
+  "name": "InsurancePolicyEvent",
+  "fields": [
+    {
+      "name": "quoteId",
+      "type": "long"
+    },
+    {
+      "name": "dni",
+      "type": "string"
+    },
+    {
+      "name": "approvedRiskScore",
+      "type": "double"
+    },
+    {
+      "name": "finalPremium",
+      "type": "double"
+    }
+  ]
+}

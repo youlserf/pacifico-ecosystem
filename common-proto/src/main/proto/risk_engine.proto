@@ -1,0 +1,20 @@
+syntax = "proto3";
+package com.pacifico.risk;
+
+option java_multiple_files = true;
+option java_package = "com.pacifico.risk";
+
+service RiskInferenceService {
+  rpc EvaluateRisk(RiskRequest) returns (RiskResponse);
+}
+
+message RiskRequest {
+  string dni = 1;
+  int32 age = 2;
+  double car_value = 3;
+}
+
+message RiskResponse {
+  double probability_score = 1; // 0.0 a 1.0
+  string risk_level = 2;        // LOW, MEDIUM, HIGH
+}

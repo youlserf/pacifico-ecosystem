@@ -1,0 +1,106 @@
+# .gitignore para proyecto Java/Maven multi-módulo
+# Excluye artefactos de build, archivos temporales, IDEs y secretos
+
+# Maven
+/target/
+**/target/
+!/**/src/**
+
+# Maven wrapper (si no quieres incluir el wrapper jar, descomentar):
+# .mvn/wrapper/maven-wrapper.jar
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.jnilib
+*.so
+*.dll
+*.log
+*.log.*
+
+# Evitar subir jars construidos que suelen estar en target/
+**/*.jar
+**/*.jar.original
+
+# Generated sources
+/generated-sources/
+/generated-test-sources/
+/generated/
+**/generated-sources/
+**/generated-test-sources/
+protoc-dependencies/
+protoc-plugins/
+
+# Test artefacts
+**/surefire-reports/
+**/test-classes/
+**/failsafe-reports/
+
+# IDEs
+.idea/
+*.iml
+*.iws
+.vscode/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# IntelliJ out
+out/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+
+# Docker
+.env
+*.env
+docker-compose.override.yml
+
+# Database, logs and runtime
+*.db
+*.sql
+*.pid
+logs/
+*.log
+
+# Certificates / keystores
+*.jks
+*.keystore
+
+# Secrets
+credentials.properties
+secrets.properties
+*.secret
+*.key
+
+# Coverage and reports
+coverage/
+*.lcov
+*.exec
+
+# Node (si en algún módulo se usa frontend)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Misc
+.DS_Store
+.vagrant/
+
+# Keep README, source and pom files tracked explicitly (no need to ignore):
+# /pom.xml
+# /src/**
+

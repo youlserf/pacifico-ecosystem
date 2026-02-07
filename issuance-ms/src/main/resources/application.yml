@@ -1,0 +1,71 @@
+# ===================================================================
+# Spring Boot Configuration - Issuance Microservice
+# ===================================================================
+
+server:
+  port: 8083
+
+spring:
+  # 1. Spring Core
+  application:
+    name: issuance-ms
+  
+  # 2. Persistence Layer (PostgreSQL)
+  datasource:
+    url: jdbc:postgresql://localhost:5432/issuance_db
+    username: user
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  # 3. Messaging Layer (Kafka)
+  kafka:
+    bootstrap-servers: localhost:9092
+    listener:
+      observation-enabled: true
+    consumer:
+      group-id: issuance-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      auto-offset-reset: earliest
+      properties:
+        schema.registry.url: http://localhost:8081
+        specific.avro.reader: true
+
+  # 4. Observability & Distributed Tracing (Spring Cloud Sleuth)
+  sleuth:
+    sampler:
+      probability: 1.0
+    propagation:
+      type: b3_multi
+  zipkin:
+    base-url: http://zipkin:9411
+    sender:
+      type: web
+
+# 5. Service Discovery (Netflix Eureka)
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+# 6. Actuator & Management
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  observations:
+    http:
+      server:
+        requests:
+          ignore-patterns: /actuator/health

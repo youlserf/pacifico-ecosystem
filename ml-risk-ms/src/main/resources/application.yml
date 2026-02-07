@@ -1,0 +1,37 @@
+# ===================================================================
+# Spring Boot Configuration - ML Risk Microservice
+# ===================================================================
+
+server:
+  port: 8082
+
+spring:
+  # 1. Spring Core
+  application:
+    name: ml-risk-ms
+  threads:
+    virtual:
+      enabled: true
+
+# 2. Custom Integration (gRPC Server)
+grpc:
+  server:
+    port: 9090
+
+# 3. Service Discovery (Netflix Eureka)
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+# 4. Actuator & Management
+management:
+  observations:
+    http:
+      server:
+        requests:
+          ignore-patterns: /actuator/health
+  endpoints:
+    web:
+      exposure:
+        include: "*"

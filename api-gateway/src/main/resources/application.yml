@@ -1,0 +1,52 @@
+# ===================================================================
+# Spring Boot Configuration - API Gateway
+# ===================================================================
+
+server:
+  port: 8080
+
+spring:
+  # 1. Spring Core
+  application:
+    name: api-gateway
+
+  # 2. Cloud Gateway Routes
+  cloud:
+    gateway:
+      routes:
+        - id: quotation-ms
+          uri: lb://QUOTATION-MS
+          predicates:
+            - Path=/quotation/**
+          filters:
+            - StripPrefix=1
+        - id: issuance-ms-ws
+          uri: lb://ISSUANCE-MS
+          predicates:
+            - Path=/issuance/ws/**
+          filters:
+            - StripPrefix=1
+        - id: issuance-ms
+          uri: lb://ISSUANCE-MS
+          predicates:
+            - Path=/issuance/**
+          filters:
+            - StripPrefix=1
+
+# 3. Service Discovery (Netflix Eureka)
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-server:8761/eureka/
+
+# 4. Actuator & Management
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  observations:
+    http:
+      server:
+        requests:
+          ignore-patterns: /actuator/health

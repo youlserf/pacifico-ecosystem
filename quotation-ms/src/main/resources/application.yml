@@ -1,0 +1,68 @@
+# ===================================================================
+# Spring Boot Configuration - Quotation Microservice
+# ===================================================================
+
+server:
+  port: 8081
+
+spring:
+  # 1. Spring Core
+  application:
+    name: quotation-ms
+  threads:
+    virtual:
+      enabled: true
+
+  # 2. Persistence Layer (PostgreSQL & Redis)
+  datasource:
+    url: jdbc:postgresql://localhost:5432/quotation_db
+    username: user
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  # 3. Messaging Layer (Kafka)
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      properties:
+        schema.registry.url: http://localhost:8081
+
+# 4. Custom Integration (gRPC Client)
+grpc:
+  client:
+    ml-risk-ms:
+      address: 'discovery:///ml-risk-ms'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+
+# 5. Service Discovery (Netflix Eureka)
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+# 6. Actuator & Management
+management:
+  observations:
+    http:
+      server:
+        requests:
+          ignore-patterns: /actuator/health
+  endpoints:
+    web:
+      exposure:
+        include: "*"

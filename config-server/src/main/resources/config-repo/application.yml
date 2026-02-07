@@ -1,0 +1,36 @@
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+    propagation:
+      type: b3multi
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
+
+# For Spring Boot 2 compatibility (Issuance-MS will inherit this but might ignore management.*)
+spring:
+  sleuth:
+    sampler:
+      probability: 1.0
+  zipkin:
+    base-url: http://zipkin:9411/
+  kafka:
+    producer:
+      observation-enabled: true
+    template:
+      observation-enabled: true
+    consumer:
+      observation-enabled: true
+  cloud:
+    gateway:
+      observability:
+        enabled: true
+
+grpc:
+  client:
+    metrics:
+      enabled: false
+  server:
+    metrics:
+      enabled: false

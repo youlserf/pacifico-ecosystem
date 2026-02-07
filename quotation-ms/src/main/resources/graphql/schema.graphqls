@@ -1,0 +1,29 @@
+type Query {
+    quote(id: ID!): Quote
+}
+
+type Mutation {
+    createQuote(input: QuoteInput!): QuoteResponse
+}
+
+input QuoteInput {
+    dni: String!
+    age: Int!
+    carValue: Float!
+}
+
+type Quote {
+    id: ID!
+    dni: String!
+    age: Int!
+    carValue: Float!
+    probabilityScore: Float
+    riskLevel: String
+    status: String
+}
+
+type QuoteResponse {
+    quoteId: ID
+    status: String
+    message: String
+}
